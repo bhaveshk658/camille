@@ -2,49 +2,38 @@ package main
 
 import (
 	"fmt"
-	"log"
-	"os"
-	"strings"
 
-	"github.com/urfave/cli"
+	"github.com/gocolly/colly"
 )
 
-var app = cli.NewApp()
-
-var sentence = []string{"Camille vs"}
-
-func info() {
-	app.Name = "Camille Matchups Guide"
-	app.Usage = "A CLI for Camille mains to learn matchups"
-	author := cli.Author{Name: "bhaveshk658", Email: "bhaveshk658@berkeley.edu"}
-	app.Authors = append(app.Authors, &author)
-	app.Version = "1.0.0"
-
+type Text struct {
+	Info string
 }
 
-func commands() {
-	app.Commands = []*cli.Command{
-		{
-			Name:    "renekton",
-			Aliases: []string{"croc"},
-			Usage:   "Print Renekton matchup info",
-			Action: func(c *cli.Context) error {
-				opponent := "Renekton"
-				matchup := append(sentence, opponent)
-				m := strings.Join(matchup, " ")
-				fmt.Println(m)
-				return nil
-			},
-		},
-	}
+const baseURL = "https://blitz.gg/lol/champions/Camille/counters/"
+
+func getWinRate(fetchURL string) Text {
+
+	texts := make([]Text, 0)
+
+	c := colly.NewCollector()
+
+	c.OnRequest(func(r *colly.Request) {
+		fmt.Println("Visiting: ", r.URL)
+	})
+
+	c.OnHTML(`.ChampionMatchupStatsHeader__Caption-sc-16vko7r-0`, func(e *colly.HTMLElement) {
+		text := Text{Info: e.Text}
+		texts = append(texts, text)
+	})
+
+	c.Visit(fetchURL)
+	return texts[0]
 }
 
 func main() {
-	info()
-	commands()
-
-	err := app.Run(os.Args)
-	if err != nil {
-		log.Fatal(err)
-	}
+	matchup := "Darius"
+	fetchURL := baseURL + matchup
+	winrate := getWinRate(fetchURL)
+	fmt.Println(winrate.Info)
 }
