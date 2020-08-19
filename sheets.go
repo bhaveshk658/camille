@@ -18,6 +18,8 @@ func checkError(err error) {
 }
 
 func main() {
+	matchup := "Renekton"
+
 	data, err := ioutil.ReadFile("secret.json")
 	checkError(err)
 	conf, err := google.JWTConfigFromJSON(data, sheets.SpreadsheetsScope)
@@ -27,15 +29,17 @@ func main() {
 	srv, err := sheets.New(client)
 	checkError(err)
 
-	readRange := "A1"
+	readRange := "A2:H57"
 	resp, err := srv.Spreadsheets.Values.Get(spreadsheetID, readRange).Do()
 	checkError(err)
 
 	if len(resp.Values) == 0 {
-		fmt.Println("No data found.")
+		fmt.Println("Matchup info not found.")
 	} else {
 		for _, row := range resp.Values {
-			fmt.Printf("%s\n", row[0])
+			if row[0] == matchup {
+				fmt.Printf("%s\n", row[1])
+			}
 		}
 	}
 
