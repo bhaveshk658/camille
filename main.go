@@ -19,12 +19,6 @@ func getWinRate(fetchURL string) Text {
 
 	c := colly.NewCollector()
 
-	/*
-		c.OnRequest(func(r *colly.Request) {
-			fmt.Println("Visiting: ", r.URL)
-		})
-	*/
-
 	c.OnHTML(`.ChampionMatchupStatsHeader__Caption-sc-16vko7r-0`, func(e *colly.HTMLElement) {
 		text := Text{Info: e.Text}
 		texts = append(texts, text)
