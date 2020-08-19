@@ -1,4 +1,4 @@
-package main
+package lib
 
 import (
 	"context"
@@ -28,7 +28,7 @@ func checkError(err error) {
 	}
 }
 
-func getMatchup(name string) Matchup {
+func GetMatchup(name *string) Matchup {
 
 	data, err := ioutil.ReadFile("secret.json")
 	checkError(err)
@@ -43,7 +43,7 @@ func getMatchup(name string) Matchup {
 	resp, err := srv.Spreadsheets.Values.Get(spreadsheetID, readRange).Do()
 	checkError(err)
 
-	matchup := Matchup{Name: name}
+	matchup := Matchup{Name: "None"}
 
 	if len(resp.Values) == 0 {
 		fmt.Println("Matchup info not found.")
@@ -69,9 +69,4 @@ func getMatchup(name string) Matchup {
 
 	return matchup
 
-}
-
-func main() {
-	matchup := getMatchup("Renekton")
-	fmt.Println(matchup.Difficulty)
 }

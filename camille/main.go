@@ -32,12 +32,16 @@ func getWinRate(fetchURL string) Text {
 }
 
 func main() {
-	matchup := flag.String("vs", "None", "Display matchup information")
+	matchupName := flag.String("vs", "None", "Display matchup information")
 	flag.Parse()
-	if *matchup == "None" {
+	if *matchupName == "None" {
 		return
 	}
-	fetchURL := baseURL + *matchup
+	fetchURL := baseURL + *matchupName
 	winrate := getWinRate(fetchURL)
-	fmt.Println(winrate.Info)
+
+	matchup := camille.getMatchup(matchupName)
+
+	fmt.Printf("Winrate: %s\n", winrate.Info)
+	fmt.Printf("Difficulty: %s\n", matchup.Difficulty)
 }
