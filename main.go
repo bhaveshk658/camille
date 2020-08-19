@@ -19,9 +19,11 @@ func getWinRate(fetchURL string) Text {
 
 	c := colly.NewCollector()
 
-	c.OnRequest(func(r *colly.Request) {
-		fmt.Println("Visiting: ", r.URL)
-	})
+	/*
+		c.OnRequest(func(r *colly.Request) {
+			fmt.Println("Visiting: ", r.URL)
+		})
+	*/
 
 	c.OnHTML(`.ChampionMatchupStatsHeader__Caption-sc-16vko7r-0`, func(e *colly.HTMLElement) {
 		text := Text{Info: e.Text}
@@ -29,20 +31,19 @@ func getWinRate(fetchURL string) Text {
 	})
 
 	c.Visit(fetchURL)
-	return texts[0]
+	if len(texts) > 0 {
+		return texts[0]
+	}
+	return Text{Info: "No matchup information available"}
 }
 
 func main() {
-	/*
-		matchup := "Darius"
-		fetchURL := baseURL + matchup
-		winrate := getWinRate(fetchURL)
-		fmt.Println(winrate.Info)
-	*/
 	matchup := flag.String("vs", "None", "Display matchup information")
 	flag.Parse()
 	if *matchup == "None" {
 		return
 	}
-	fmt.Println(*matchup)
+	fetchURL := baseURL + *matchup
+	winrate := getWinRate(fetchURL)
+	fmt.Println(winrate.Info)
 }
