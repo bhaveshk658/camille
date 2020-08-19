@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 
 	"github.com/gocolly/colly"
@@ -32,8 +33,16 @@ func getWinRate(fetchURL string) Text {
 }
 
 func main() {
-	matchup := "Darius"
-	fetchURL := baseURL + matchup
-	winrate := getWinRate(fetchURL)
-	fmt.Println(winrate.Info)
+	/*
+		matchup := "Darius"
+		fetchURL := baseURL + matchup
+		winrate := getWinRate(fetchURL)
+		fmt.Println(winrate.Info)
+	*/
+	matchup := flag.String("vs", "None", "Display matchup information")
+	flag.Parse()
+	if *matchup == "None" {
+		return
+	}
+	fmt.Println(*matchup)
 }
