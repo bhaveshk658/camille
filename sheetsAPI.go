@@ -1,4 +1,4 @@
-package lib
+package main
 
 import (
 	"context"
@@ -49,7 +49,7 @@ func GetMatchup(name *string) Matchup {
 		fmt.Println("Matchup info not found.")
 	} else {
 		for _, row := range resp.Values {
-			if row[0] == name {
+			if row[0] == *name {
 
 				matchup = Matchup{
 					Name:         row[0].(string),

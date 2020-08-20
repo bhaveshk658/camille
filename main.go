@@ -40,8 +40,14 @@ func main() {
 	fetchURL := baseURL + *matchupName
 	winrate := getWinRate(fetchURL)
 
-	matchup := camille.getMatchup(matchupName)
+	matchup := GetMatchup(matchupName)
 
-	fmt.Printf("Winrate: %s\n", winrate.Info)
+	fmt.Println(winrate.Info)
 	fmt.Printf("Difficulty: %s\n", matchup.Difficulty)
+	fmt.Printf("Ability Start: %s\n", matchup.AbilityStart)
+	fmt.Printf("Tips:\n %s\n", matchup.Tips)
+	fmt.Printf("Runes: %s\n", matchup.Runes)
+	fmt.Printf("Changes: %s\n", matchup.Changes)
+	fmt.Printf("Starting Item: %s\n", matchup.ItemStart)
+	fmt.Printf("Item Rush: %s\n", matchup.ItemRush)
 }
