@@ -1,8 +1,8 @@
-#compdef camille
+#compdef _camille camille
 
-local -a pages oses
-pages=$(camille --list-all)
+function camille {
+    local line
 
-_arguments \
-    '(-vs r)'{-vs Renekton}'[display Renekton info]' \
-    "*:page:(${pages})" && return 0
+    _arguments -C \
+        "-vs[Provide matchup information]"
+}
