@@ -28,7 +28,7 @@ func checkError(err error) {
 	}
 }
 
-func GetMatchup(name *string) Matchup {
+func getMatchup(name *string) Matchup {
 
 	data, err := ioutil.ReadFile("secret.json")
 	checkError(err)
