@@ -2,6 +2,7 @@
 A command line program for Camille mains. It started as a project to learn Go but ended up being pretty useful.
 
 ## Example
+![](image.png)
 
 ## How it Works
 This command-line program scrapes matchup webpages for winrates regarding the matchup using Go. Then, it uses Sheets API to retrieve
