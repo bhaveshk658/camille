@@ -4,6 +4,10 @@ import "github.com/gocolly/colly"
 
 const baseURL = "https://blitz.gg/lol/champions/Camille/counters/"
 
+type Text struct {
+	Info string
+}
+
 func getWinRate(fetchURL string) Text {
 
 	texts := make([]Text, 0)
