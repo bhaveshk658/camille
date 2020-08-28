@@ -5,7 +5,9 @@ import os
 import sys
 import time
 
-RIOT_API_KEY = "RGAPI-76fcccea-6305-465f-970e-efd9e4bcbcc8"
+with open("riot_key.txt", 'r') as f:
+    RIOT_API_KEY = f.read()
+print(RIOT_API_KEY)
 cass.set_riot_api_key(RIOT_API_KEY)
 
 def check(match, matchup):
